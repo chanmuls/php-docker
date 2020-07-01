@@ -27,8 +27,7 @@ RUN apt-get install -y software-properties-common locales locales-all \
 RUN wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 RUN echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/php.list
 
-RUN apt-get -y upgrade && apt-get update && LC_ALL=en_US.UTF-8 add-apt-repository -y ppa:ondrej/php \
-    && mkdir /run/php
+RUN apt-get -y upgrade && apt-get update && mkdir /run/php
 
 RUN apt-get -y install php7.3 php7.3-fpm php7.3-mbstring \
     php7.3-mysql php7.3-mysqli php7.3-gd curl php7.3-curl php-redis php7.3-mbstring sendmail supervisor \
@@ -38,7 +37,7 @@ RUN apt-get -y install php7.3 php7.3-fpm php7.3-mbstring \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # http://download.redis.io/releases/
-RUN wget http://download.redis.io/releases/redis-5.0.9.tar.gz
+RUN wget --no-check-certificate https://download.redis.io/releases/redis-5.0.9.tar.gz
 RUN tar xzf redis-5.0.9.tar.gz
 RUN mv redis-5.0.9 /etc/redis
 RUN rm -rf redis-5.0.9.tar.gz
